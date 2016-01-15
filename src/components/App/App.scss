@@ -5,16 +5,31 @@
  * Base styles
  * ========================================================================== */
 
-html {
-  color: #222;
-  font-weight: 100;
-  font-size: 1em; /* ~16px; */
+body {
+  background-color: $grey-light;
   font-family: $font-family-base;
-  line-height: 1.375; /* ~22px */
+  font-weight: 100;
+  font-size: 1.6em;
+  margin-top: 50px;
 }
 
 .container {
   margin: 0 auto;
   padding: 0 0 40px;
   max-width: $max-content-width;
+}
+
+.btn-primary {
+  background-color: $blue;
+  border-color: $blue;
+}
+.row {
+  margin-bottom: 10px;
+}
+.row-centered {
+  text-align: center;
+}
+.col-centered {
+  display:inline-block;
+  float:none;
 }

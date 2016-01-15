@@ -47,9 +47,11 @@
   },
   "dependencies": {
     "babel-core": "~6.3.21",
+    "firebase": "^2.3.2",
     "normalize.css": "~3.0.3",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-router": "^2.0.0-rc5"
+    "react-router": "^2.0.0-rc5",
+    "reactfire": "^0.5.1"
   }
 }
