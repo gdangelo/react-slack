@@ -33,7 +33,11 @@ const App = React.createClass({
                 Login
               </Link>
               <span> or </span>
-              <button type="button" className="btn btn-primary">Register</button>
+              <Link to="/register"
+                type="button"
+                className="btn btn-primary">
+                Register
+              </Link>
             </div>
           </div>
           <div className="row row-centered">
