@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import Hello from '../Hello/Hello';
 import s from './App.scss';
 
-class App extends Component {
+const App = React.createClass({
 
-  render() {
-    return <Hello name="React" />;
-  }
-
-}
+    render: function () {
+      return <h1>React Slack!</h1>;
+    }
+    
+});
 
 export default App;
