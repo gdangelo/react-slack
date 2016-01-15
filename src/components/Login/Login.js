@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import s from './Login.scss';
 
+let rootUrl = "https://react-slack.firebaseio.com/";
+let ref = new Firebase(rootUrl);
+
 const Login = React.createClass({
 
     getInitialState: function () {
@@ -71,7 +74,18 @@ const Login = React.createClass({
     },
 
     handleLoginClick: function() {
-      console.log(this.state.email + ' / ' + this.state.password);
+      ref.authWithPassword({
+        email    : this.state.email,
+        password : this.state.password
+      }, function(error, authData) {
+        if (error) {
+          console.log("Error logging user:", error);
+        } else {
+          console.log("Successfully logging user account with uid:", authData.uid);
+        }
+      }, {
+        remember: "sessionOnly"
+      });
     }
 
 });
