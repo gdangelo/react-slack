@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Firebase from 'firebase';
+import ReactFire from 'reactfire';
 import s from './Register.scss';
 
+let rootUrl = "https://react-slack.firebaseio.com/";
+let ref = new Firebase(rootUrl);
+
 const Register = React.createClass({
+
+    mixins: [ ReactFire ],
 
     getInitialState: function () {
       return {
@@ -57,7 +64,7 @@ const Register = React.createClass({
                     <button
                       type="button"
                       className="btn btn-primary"
-                      onClick={this.handleLoginClick}>
+                      onClick={this.handleRegisterClick}>
                       Create account
                     </button>
                     <div className="footer">
@@ -85,8 +92,17 @@ const Register = React.createClass({
       this.setState({ password: event.target.value });
     },
 
-    handleLoginClick: function() {
-      console.log(this.state.username + ' / ' + this.state.email + ' / ' + this.state.password);
+    handleRegisterClick: function() {
+      ref.createUser({
+        email    : this.state.email,
+        password : this.state.password
+      }, function(error, userData) {
+        if (error) {
+          console.log("Error creating user:", error);
+        } else {
+          console.log("Successfully created user account with uid:", userData.uid);
+        }
+      });
     }
 
 });
