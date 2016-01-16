@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import auth from '../../auth';
 import s from './Register.scss';
 
@@ -93,7 +93,7 @@ const Register = React.createClass({
       };
 
       auth.register(userAndPass)
-        .then(authData => console.log("Redirect to /profile"))
+        .then(authData => browserHistory.push('/profile'))
         .catch(err => console.error(err.stack));
     }
 
