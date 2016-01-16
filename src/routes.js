@@ -8,6 +8,15 @@ import Register from './components/Register/Register';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
 
+function isAuth(nextState, replace) {
+  if (auth.loggedIn()) {
+    replace({
+      pathname: '/messages',
+      state: { nextPathname: nextState.location.pathname }
+    })
+  }
+}
+
 function requireAuth(nextState, replace) {
   if (!auth.loggedIn()) {
     replace({
@@ -19,7 +28,7 @@ function requireAuth(nextState, replace) {
 
 render((
   <Router history={browserHistory}>
-    <Route path="/" component={App} />
+    <Route path="/" component={App} onEnter={isAuth} />
     <Route path="login" component={Login} />
     <Route path="register" component={Register} />
     <Route path="profile" component={Profile} onEnter={requireAuth} />

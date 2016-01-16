@@ -1,9 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
+import auth from '../../auth';
 import s from './Messages.scss';
 
 const Messages = React.createClass({
 
+  componentWillMount: function () {
+    if (!auth.loggedIn()){
+      browserHistory.push('/login');
+    }
+  },
+  
   render: function () {
     return (
       <div id="wrapper">
@@ -11,7 +18,7 @@ const Messages = React.createClass({
         <div id="sidebar-wrapper">
           <ul className="sidebar-nav">
             <li className="sidebar-brand">
-              <Link to="/">ReactSlack</Link>
+              ReactSlack
             </li>
             <li className="sidebar-title">
               <a href="#">Channels</a>
@@ -30,6 +37,7 @@ const Messages = React.createClass({
             </li>
             <li className="sidebar-footer">
               Grégory DAngelo
+              <Link to="/profile">edit profile</Link> / <a href="" onClick={this.handleLogoutClick}>logout</a>
             </li>
           </ul>
         </div>
@@ -46,6 +54,10 @@ const Messages = React.createClass({
 
     </div>
     );
+  },
+
+  handleLogoutClick: function(){
+    auth.logout( () => browserHistory.push('/'));
   }
 
 });
