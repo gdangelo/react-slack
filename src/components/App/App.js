@@ -1,19 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Firebase from 'firebase';
-import ReactFire from 'reactfire';
 import s from './App.scss';
 
-let rootUrl = "https://react-slack.firebaseio.com/";
-
 const App = React.createClass({
-
-    mixins: [ ReactFire ],
-
-    componentWillMount: function () {
-      let ref = new Firebase(rootUrl + "items");
-      this.bindAsObject(ref, "items");
-    },
 
     render: function () {
       return (
