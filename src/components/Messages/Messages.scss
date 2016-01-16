@@ -1,0 +1,116 @@
+@import '../variables.scss';
+
+/*
+ * Channels styles
+ * ========================================================================== */
+
+ #wrapper {
+    padding-left: 220px;
+    transition: all 0.5s ease;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 220px;
+    width: 220px;
+    height: 100%;
+    margin-left: -220px;
+    overflow-y: auto;
+    background: $purple;
+    transition: all 0.5s ease;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+
+  #page-content-wrapper {
+    width: 100%;
+    left: 220px;
+    position: absolute;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+
+  /* Sidebar Styles */
+
+  .sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sidebar-nav li {
+    text-indent: 20px;
+    line-height: 25px;
+  }
+
+  .sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: $purple-light;
+    border-radius: 0 5px 5px 0;
+  }
+
+  .sidebar-nav li a:hover {
+    text-decoration: none;
+    color: white;
+    background: $purple-dark;
+  }
+
+  .sidebar-nav li a:active,
+  .sidebar-nav li a:focus {
+    text-decoration: none;
+    background-color: $green;
+    color: white;
+  }
+
+  .sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+    width: 220px;
+  }
+
+  .sidebar-nav > .sidebar-brand a {
+    color: white;
+  }
+
+  .sidebar-nav > .sidebar-brand a:hover {
+    color: white;
+    background: $purple-dark;
+  }
+
+  .sidebar-nav > .sidebar-title {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .sidebar-nav > .sidebar-title a:hover {
+    color: white;
+    background: none;
+  }
+
+  .sidebar-nav > .sidebar-footer {
+    background: $purple-dark;
+    bottom: 0;
+    color: white;
+    font-size: 12px;
+    height: 65px;
+    line-height: 65px;
+    position: fixed;
+    width: 220px;
+  }

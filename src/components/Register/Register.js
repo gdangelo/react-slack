@@ -93,7 +93,7 @@ const Register = React.createClass({
       };
 
       auth.register(userAndPass)
-        .then(authData => browserHistory.push('/profile'))
+        .then(authData => browserHistory.push('/messages'))
         .catch(err => console.error(err.stack));
     }
 
