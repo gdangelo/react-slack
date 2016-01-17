@@ -84,13 +84,9 @@
     width: 220px;
   }
 
-  .sidebar-nav > .sidebar-brand a {
-    color: white;
-  }
-
-  .sidebar-nav > .sidebar-brand a:hover {
-    color: white;
+  .sidebar-nav > .sidebar-brand {
     background: $purple-dark;
+    color: white;
   }
 
   .sidebar-nav > .sidebar-title {

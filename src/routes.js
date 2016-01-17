@@ -29,8 +29,8 @@ function requireAuth(nextState, replace) {
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App} onEnter={isAuth} />
-    <Route path="login" component={Login} />
-    <Route path="register" component={Register} />
+    <Route path="login" component={Login} onEnter={isAuth} />
+    <Route path="register" component={Register} onEnter={isAuth} />
     <Route path="profile" component={Profile} onEnter={requireAuth} />
     <Route path="messages" component={Messages} onEnter={requireAuth} />
   </Router>

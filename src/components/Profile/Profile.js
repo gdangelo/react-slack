@@ -24,8 +24,8 @@ const Profile = React.createClass({
       browserHistory.push('/login');
     }
     else {
-      let fb = new Firebase(rootUrl + 'users/' + ref.getAuth().uid);
-      fb.once('value', this.handleDataLoaded);
+      this.fb = new Firebase(rootUrl + 'users/' + ref.getAuth().uid);
+      this.fb.once('value', this.handleDataLoaded);
     }
   },
 

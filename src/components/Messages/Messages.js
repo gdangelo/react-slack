@@ -1,16 +1,33 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
+import ReactFire from 'reactfire';
+import Firebase from 'firebase';
 import auth from '../../auth';
 import s from './Messages.scss';
+import ListChannels from '../ListChannels/ListChannels';
+
+let rootUrl = "https://react-slack.firebaseio.com/";
 
 const Messages = React.createClass({
+
+  mixins: [ ReactFire ],
+
+  getInitialState: function () {
+    return {
+      channels: {},
+      loaded: false
+    };
+  },
 
   componentWillMount: function () {
     if (!auth.loggedIn()){
       browserHistory.push('/login');
     }
+    this.fb = new Firebase(rootUrl + 'channels/');
+    this.bindAsObject(this.fb, 'channels');
+    this.fb.on('value', this.handleDataLoaded);
   },
-  
+
   render: function () {
     return (
       <div id="wrapper">
@@ -23,20 +40,17 @@ const Messages = React.createClass({
             <li className="sidebar-title">
               <a href="#">Channels</a>
             </li>
-            <li>
-              <a href="#"># general</a>
-            </li>
-            <li>
-              <a href="#"># random</a>
-            </li>
+            {this.state.loaded ?
+                <ListChannels
+                    channelsStore={this.firebaseRefs.channels}
+                    channels={this.state.channels} /> :
+                ""
+            }
             <li className="sidebar-title">
               <a href="#">Direct messages</a>
             </li>
-            <li>
-              <a href="#">slackbot</a>
-            </li>
             <li className="sidebar-footer">
-              Grégory DAngelo
+              {this.props.username}
               <Link to="/profile">edit profile</Link> / <a href="" onClick={this.handleLogoutClick}>logout</a>
             </li>
           </ul>
@@ -54,6 +68,10 @@ const Messages = React.createClass({
 
     </div>
     );
+  },
+
+  handleDataLoaded: function () {
+    this.setState({loaded: true});
   },
 
   handleLogoutClick: function(){
