@@ -5,6 +5,7 @@ import Firebase from 'firebase';
 import auth from '../../auth';
 import s from './Messages.scss';
 import ListChannels from '../ListChannels/ListChannels';
+import ListUsers from '../ListUsers/ListUsers';
 
 let rootUrl = "https://react-slack.firebaseio.com/";
 
@@ -15,7 +16,9 @@ const Messages = React.createClass({
   getInitialState: function () {
     return {
       channels: {},
-      loaded: false
+      users: {},
+      channelsLoaded: false,
+      usersLoaded: false
     };
   },
 
@@ -23,9 +26,14 @@ const Messages = React.createClass({
     if (!auth.loggedIn()){
       browserHistory.push('/login');
     }
-    this.fb = new Firebase(rootUrl + 'channels/');
-    this.bindAsObject(this.fb, 'channels');
-    this.fb.on('value', this.handleDataLoaded);
+    /* handle channels */
+    this.fbChannels = new Firebase(rootUrl + 'channels/');
+    this.bindAsObject(this.fbChannels, 'channels');
+    this.fbChannels.on('value', this.handleChannelsDataLoaded);
+    /* handle users */
+    this.fbUsers = new Firebase(rootUrl + 'users/');
+    this.bindAsObject(this.fbUsers, 'users');
+    this.fbUsers.on('value', this.handleUsersDataLoaded);
   },
 
   render: function () {
@@ -40,7 +48,7 @@ const Messages = React.createClass({
             <li className="sidebar-title">
               <a href="#">Channels</a>
             </li>
-            {this.state.loaded ?
+            {this.state.channelsLoaded ?
                 <ListChannels
                     channelsStore={this.firebaseRefs.channels}
                     channels={this.state.channels} /> :
@@ -49,6 +57,12 @@ const Messages = React.createClass({
             <li className="sidebar-title">
               <a href="#">Direct messages</a>
             </li>
+            {this.state.usersLoaded ?
+                <ListUsers
+                    usersStore={this.firebaseRefs.users}
+                    users={this.state.users} /> :
+                ""
+            }
             <li className="sidebar-footer">
               {this.props.username}
               <Link to="/profile">edit profile</Link> / <a href="" onClick={this.handleLogoutClick}>logout</a>
@@ -70,8 +84,12 @@ const Messages = React.createClass({
     );
   },
 
-  handleDataLoaded: function () {
-    this.setState({loaded: true});
+  handleChannelsDataLoaded: function () {
+    this.setState({channelsLoaded: true});
+  },
+
+  handleUsersDataLoaded: function () {
+    this.setState({usersLoaded: true});
   },
 
   handleLogoutClick: function(){
