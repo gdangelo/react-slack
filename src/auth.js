@@ -10,9 +10,16 @@ module.exports = {
   },
 
   logout(cb) {
-    ref.unauth();
-    if (typeof cb == "function"){
-      cb();
+    let user = ref.getAuth();
+    if (user){
+      ref.child("users").child(user.uid).update({
+        connected: false
+      });
+      ref.unauth();
+
+      if (typeof cb == "function"){
+        cb();
+      }
     }
   },
 
@@ -38,7 +45,8 @@ function authWithPassword(userObj) {
           // use them in Security and Firebase Rules, and show profiles
           ref.child("users").child(authData.uid).set({
             provider: authData.provider,
-            name: getName(authData)
+            name: getName(authData),
+            connected: true
           });
         }
 

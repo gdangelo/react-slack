@@ -20,7 +20,7 @@ const ListUsers = React.createClass({
       if(this.props.users[key].name){
         children.push(
           <li key={key}>
-            <a href="#">{user.name}</a>
+            <a href="#">{user.connected ? "* " + user.name : user.name}</a>
           </li>
         );
       }
