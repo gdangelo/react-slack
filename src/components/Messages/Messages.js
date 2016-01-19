@@ -41,33 +41,37 @@ const Messages = React.createClass({
       <div id="wrapper">
 
         <div id="sidebar-wrapper">
-          <ul className="sidebar-nav">
-            <li className="sidebar-brand">
+          <div className="sidebar-nav">
+            <div className="sidebar-brand">
               ReactSlack
-            </li>
-            <li className="sidebar-title">
-              <a href="#">Channels</a>
-            </li>
-            {this.state.channelsLoaded ?
-                <ListChannels
-                    channelsStore={this.firebaseRefs.channels}
-                    channels={this.state.channels} /> :
-                ""
-            }
-            <li className="sidebar-title">
-              <a href="#">Direct messages</a>
-            </li>
-            {this.state.usersLoaded ?
-                <ListUsers
-                    usersStore={this.firebaseRefs.users}
-                    users={this.state.users} /> :
-                ""
-            }
-            <li className="sidebar-footer">
+            </div>
+            <div className="sidebar-section">
+              <h2>Channels</h2>
+              <ul className="sidebar-list">
+                {this.state.channelsLoaded ?
+                    <ListChannels
+                        channelsStore={this.firebaseRefs.channels}
+                        channels={this.state.channels} /> :
+                    ""
+                }
+              </ul>
+            </div>
+            <div className="sidebar-section">
+              <h2>Direct messages</h2>
+              <ul className="sidebar-list">
+              {this.state.usersLoaded ?
+                  <ListUsers
+                      usersStore={this.firebaseRefs.users}
+                      users={this.state.users} /> :
+                  ""
+              }
+              </ul>
+            </div>
+            <div className="sidebar-footer">
               {this.props.username}
               <Link to="/profile">edit profile</Link> / <a href="" onClick={this.handleLogoutClick}>logout</a>
-            </li>
-          </ul>
+            </div >
+          </div>
         </div>
 
         <div id="page-content-wrapper">

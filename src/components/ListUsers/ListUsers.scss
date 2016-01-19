@@ -3,3 +3,17 @@
 /*
  * ListUsers styles
  * ========================================================================== */
+
+.sidebar-users:before {
+  content: '\f111';
+  font-family: 'FontAwesome';
+  font-size: 10px;
+  float: left;
+  color: $purple-light;
+}
+.connected:before {
+  color: $green-light;
+}
+.sidebar-users {
+
+}

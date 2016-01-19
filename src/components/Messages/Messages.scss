@@ -46,9 +46,6 @@
     position: absolute;
     top: 0;
     width: 200px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
   }
 
   .sidebar-nav li {
@@ -89,16 +86,22 @@
     color: white;
   }
 
-  .sidebar-nav > .sidebar-title {
+  .sidebar-nav > .sidebar-section h2 {
+    color: $purple-light;
     margin-top: 12px;
     font-size: 13px;
     font-weight: bold;
     text-transform: uppercase;
   }
 
-  .sidebar-nav > .sidebar-title a:hover {
+  .sidebar-nav > .sidebar-section h2:hover {
     color: white;
-    background: none;
+    cursor: pointer;
+  }
+
+  .sidebar-nav > .sidebar-section ul {
+    list-style: none;
+    padding-left: 0;
   }
 
   .sidebar-nav > .sidebar-footer {

@@ -17,10 +17,10 @@ const ListUsers = React.createClass({
     for(let key in this.props.users) {
       let user = this.props.users[key];
 
-      if(this.props.users[key].name){
+      if(user.name){
         children.push(
-          <li key={key}>
-            <a href="#">{user.connected ? "* " + user.name : user.name}</a>
+          <li key={key} className={"sidebar-users" + (user.connected ? " connected" : "")}>
+            <a href="#">{user.name}</a>
           </li>
         );
       }
