@@ -29,6 +29,10 @@ module.exports = {
 
   register(userObj) {
     return createUserAndLogin(userObj);
+  },
+
+  getUserAuth() {
+    return ref.getAuth();
   }
 }
 

@@ -5,9 +5,6 @@ import ReactFire from 'reactfire';
 import auth from '../../auth';
 import s from './Profile.scss';
 
-let rootUrl = "https://react-slack.firebaseio.com/";
-let ref = new Firebase(rootUrl);
-
 const Profile = React.createClass({
 
   mixins: [ ReactFire ],
@@ -24,7 +21,7 @@ const Profile = React.createClass({
       browserHistory.push('/login');
     }
     else {
-      this.fb = new Firebase(rootUrl + 'users/' + ref.getAuth().uid);
+      this.fb = new Firebase(rootUrl + 'users/' + auth.getUserAuth().uid);
       this.fb.once('value', this.handleDataLoaded);
     }
   },
