@@ -7,9 +7,6 @@ const ListChannels = React.createClass({
     return (
       <div>
         {this.renderList()}
-        <li>
-          <a href="#" onClick={this.handleNewChannelClick}>+ create new channel</a>
-        </li>
       </div>
     );
   },
@@ -30,12 +27,6 @@ const ListChannels = React.createClass({
     }
 
     return children;
-  },
-
-  handleNewChannelClick: function() {
-    this.props.channelsStore.push({
-      name: 'general'
-    });
   }
 
 });

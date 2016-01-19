@@ -24,7 +24,9 @@ const Messages = React.createClass({
       messagesLoaded: false,
       userSelected: {},
       channelSelected: {},
-      message: ''
+      message: '',
+      newChannelClicked: false,
+      newChannel: ''
     };
   },
 
@@ -66,6 +68,9 @@ const Messages = React.createClass({
                         onSelectedChannel={this.handleChannelClick}/>
                     : null
                 }
+                <li>
+                  <a href="#" onClick={this.handleNewChannelClick}>+ create new channel</a>
+                </li>
               </ul>
             </div>
             <div className="sidebar-section">
@@ -103,10 +108,36 @@ const Messages = React.createClass({
   },
 
   renderBody: function () {
+    if (this.state.newChannelClicked) {
+      return (
+        <div>
+          <h1>Create a new channel</h1>
+          <div className="form-group">
+            <div className="input-group">
+              <input
+                type="text"
+                value={this.state.newChannel}
+                className="form-control"
+                placeholder="Channel name..."
+                onChange={this.handleCreateChannelChange}/>
+              <span className="input-group-btn">
+                <button
+                  className="btn btn-default"
+                  type="submit"
+                  onClick={this.handleCreateChannelClick}>
+                  Create
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     if (Object.keys(this.state.userSelected).length > 0 ||
       Object.keys(this.state.channelSelected).length > 0) {
       return (
-        <div>
+        <div className="form-group">
           {
             Object.keys(this.state.userSelected).length > 0 ?
               <h1>@ {this.state.userSelected.name}</h1> :
@@ -122,7 +153,7 @@ const Messages = React.createClass({
             <span className="input-group-btn">
               <button
                 className="btn btn-secondary"
-                type="button"
+                type="submit"
                 onClick={this.handleSendClick}>
                 Send
               </button>
@@ -203,6 +234,10 @@ const Messages = React.createClass({
     });
   },
 
+  handleNewChannelClick: function () {
+    this.setState({ newChannelClicked: true });
+  },
+
   handleUserClick: function (key) {
     this.resetSelection();
 
@@ -216,13 +251,27 @@ const Messages = React.createClass({
   resetSelection: function () {
     this.setState({
       userSelected: {},
-      channelSelected: {}
+      channelSelected: {},
+      newChannelClicked: false
     });
   },
 
   handleMessageChange: function (event) {
     this.setState({
       message: event.target.value
+    });
+  },
+
+  handleCreateChannelChange: function (event) {
+    this.setState({
+      newChannel: event.target.value
+    });
+  },
+
+  handleCreateChannelClick: function () {
+    this.firebaseRefs.channels.push({ name: this.state.newChannel });
+    this.setState({
+      newChannel: ''
     });
   },
 
