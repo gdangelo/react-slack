@@ -23,7 +23,7 @@ const ListChannels = React.createClass({
       if(this.props.channels[key].name){
         children.push(
           <li key={key}>
-            <a href="#"># {channel.name}</a>
+            <a href="#" onClick={this.props.onSelectedChannel.bind(null, key)}># {channel.name}</a>
           </li>
         );
       }

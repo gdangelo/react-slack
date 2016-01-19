@@ -23,6 +23,7 @@ const Messages = React.createClass({
       usersLoaded: false,
       messagesLoaded: false,
       userSelected: {},
+      channelSelected: {},
       message: ''
     };
   },
@@ -61,7 +62,8 @@ const Messages = React.createClass({
                   this.state.channelsLoaded ?
                     <ListChannels
                         channelsStore={this.firebaseRefs.channels}
-                        channels={this.state.channels} />
+                        channels={this.state.channels}
+                        onSelectedChannel={this.handleChannelClick}/>
                     : null
                 }
               </ul>
@@ -101,10 +103,15 @@ const Messages = React.createClass({
   },
 
   renderBody: function () {
-    if (Object.keys(this.state.userSelected).length > 0) {
+    if (Object.keys(this.state.userSelected).length > 0 ||
+      Object.keys(this.state.channelSelected).length > 0) {
       return (
         <div>
-          <h1>@ {this.state.userSelected.name}</h1>
+          {
+            Object.keys(this.state.userSelected).length > 0 ?
+              <h1>@ {this.state.userSelected.name}</h1> :
+              <h1># {this.state.channelSelected.name}</h1>
+          }
           <div className="input-group">
             <input
               type="text"
@@ -134,11 +141,22 @@ const Messages = React.createClass({
 
     if (this.state.messagesLoaded) {
       for (let key in this.state.messages) {
-        let users = this.state.messages[key].users;
+        let users = this.state.messages[key] ? this.state.messages[key].users : null;
 
-        if (users &&
+        if (Object.keys(this.state.userSelected).length > 0 &&
+            users &&
             users.indexOf(this.state.currentUser.id) != -1 &&
             users.indexOf(this.state.userSelected.id) != -1) {
+
+          children.push(
+            <li key={key}>
+              {this.state.messages[key].text + " | " + this.state.messages[key].datetime}
+            </li>
+          );
+        }
+        else if (Object.keys(this.state.channelSelected).length > 0 &&
+            this.state.channelSelected.id == this.state.messages[key].channel ) {
+
           children.push(
             <li key={key}>
               {this.state.messages[key].text + " | " + this.state.messages[key].datetime}
@@ -175,12 +193,30 @@ const Messages = React.createClass({
     auth.logout( () => browserHistory.push('/'));
   },
 
+  handleChannelClick: function (key) {
+    this.resetSelection();
+
+    let channelSelected = this.state.channels[key];
+    channelSelected.id = key;
+    this.setState({
+      channelSelected: channelSelected
+    });
+  },
+
   handleUserClick: function (key) {
+    this.resetSelection();
+
     let userSelected = this.state.users[key];
     userSelected.id = key;
-
     this.setState({
       userSelected: userSelected
+    });
+  },
+
+  resetSelection: function () {
+    this.setState({
+      userSelected: {},
+      channelSelected: {}
     });
   },
 
@@ -192,10 +228,19 @@ const Messages = React.createClass({
 
   handleSendClick: function () {
     if (this.state.message) {
+      let channel = Object.keys(this.state.channelSelected).length > 0 ?
+        this.state.channelSelected.id :
+        '';
+
+      let users = Object.keys(this.state.userSelected).length > 0 ?
+        [this.state.currentUser.id, this.state.userSelected.id] :
+        [];
+
       this.firebaseRefs.messages.push({
         text: this.state.message,
-        users: [this.state.currentUser.id, this.state.userSelected.id],
-        datetime: new Date().toString()
+        users: users,
+        datetime: new Date().toString(),
+        channel: channel
       });
       // reset message state
       this.setState({ message: '' });
