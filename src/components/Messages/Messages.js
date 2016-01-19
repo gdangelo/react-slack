@@ -17,9 +17,11 @@ const Messages = React.createClass({
     return {
       channels: {},
       users: {},
+      messages: {},
       currentUser: {},
       channelsLoaded: false,
       usersLoaded: false,
+      messagesLoaded: false,
       userSelected: {},
       message: ''
     };
@@ -40,6 +42,7 @@ const Messages = React.createClass({
     /* handle messages */
     this.fbMessages = new Firebase(rootUrl + 'messages/');
     this.bindAsObject(this.fbMessages, 'messages');
+    this.fbUsers.on('value', this.handleMessagesDataLoaded);
   },
 
   render: function () {
@@ -118,9 +121,34 @@ const Messages = React.createClass({
               </button>
             </span>
           </div>
+          <ul className="messages">
+            {this.renderMessages()}
+          </ul>
         </div>
       )
     }
+  },
+
+  renderMessages: function () {
+    let children = [];
+
+    if (this.state.messagesLoaded) {
+      for (let key in this.state.messages) {
+        let users = this.state.messages[key].users;
+
+        if (users &&
+            users.indexOf(this.state.currentUser.id) != -1 &&
+            users.indexOf(this.state.userSelected.id) != -1) {
+          children.push(
+            <li key={key}>
+              {this.state.messages[key].text + " | " + this.state.messages[key].datetime}
+            </li>
+          );
+        }
+      }
+    }
+
+    return children;
   },
 
   handleChannelsDataLoaded: function () {
@@ -134,6 +162,12 @@ const Messages = React.createClass({
     this.setState({
       usersLoaded: true,
       currentUser: currentUser
+    });
+  },
+
+  handleMessagesDataLoaded: function () {
+    this.setState({
+      messagesLoaded: true,
     });
   },
 
