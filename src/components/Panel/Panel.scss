@@ -1,0 +1,54 @@
+@import '../variables.scss';
+
+/*
+ * Panel styles
+ * ========================================================================== */
+
+.panel {
+  border-radius: 11px;
+  margin-top: 50px;
+}
+.panel-primary {
+  border-color: white;
+}
+.panel-primary > .panel-heading {
+  background-color: $blue;
+  border-color: white;
+}
+.panel-heading {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 20px 0 20px 0;
+
+  .panel-title {
+    font-size: 24px;
+  }
+}
+.panel-body {
+  .btn {
+    width: 100%;
+  }
+}
+.panel-submit {
+  margin-top: 20px;
+}
+.form-control {
+  border-color: $grey;
+  box-shadow: none;
+  border-width: 2px;
+  color: $grey-dark;
+}
+.input-group-addon {
+   border: none;
+}
+.input-group {
+  margin-top: 15px;
+}
+.input-group-lg {
+  .form-control, .input-group-addon {
+    border-radius: 0;
+  }
+}
+.glyphicon {
+  top: 0;
+}

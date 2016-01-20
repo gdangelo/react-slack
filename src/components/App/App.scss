@@ -18,9 +18,58 @@ body {
   max-width: $max-content-width;
 }
 
-.btn-primary {
+.btn {
+  border-radius: 20px;
+  border-width: 2px;
+  font-weight: bold;
+  padding: 10px 25px;
+  text-transform: uppercase;
+}
+.btn-default {
+  background-color: $grey-dark;
+  border-color: $grey-dark;
+  color: white;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
+  background-color: $grey;
+  border-color: $grey;
+  color: white;
+}
+.btn-default.btn-outlined {
+  background-color: white;
+  border-color: $grey-dark;
+  color: $grey-dark;
+}
+.btn-default.btn-outlined:hover,
+.btn-default.btn-outlined:focus,
+.btn-default.btn-outlined:active {
+  background-color: $grey;
+  border-color: $grey;
+  color: white;
+}
+.btn-blue {
   background-color: $blue;
   border-color: $blue;
+  color: white;
+}
+.btn-blue:hover,
+.btn-blue:focus {
+  background-color: $blue-light;
+  border-color: $blue-light;
+  color: white;
+}
+.btn-blue.btn-outlined {
+  background-color: white;
+  border-color: $blue-light;
+  color: $blue-light;
+}
+.btn-blue.btn-outlined:hover,
+.btn-blue.btn-outlined:focus {
+  background-color: $blue-light;
+  border-color: $blue-light;
+  color: white;
 }
 .row {
   margin-bottom: 10px;

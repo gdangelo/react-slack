@@ -17,14 +17,12 @@ const App = React.createClass({
         <div className="row row-centered">
           <div className="col-md-8 col-centered">
             <Link to="/login"
-              type="button"
-              className="btn btn-default">
+              className="btn btn-default btn-outlined">
               Login
             </Link>
             <span> or </span>
             <Link to="/register"
-              type="button"
-              className="btn btn-primary">
+              className="btn btn-blue">
               Register
             </Link>
           </div>
